@@ -1,0 +1,35 @@
+apiVersion: v1
+entries:
+  code-server-go:
+  - apiVersion: v2
+    appVersion: v4.100.2
+    created: "2025-05-16T19:10:24.499556811+08:00"
+    description: A Helm chart for deploying a Golang-based code server for internal
+      use.
+    digest: 60ee36350dda98256d0583c87327777ffacd76aa853c01adf9150abb514cce1c
+    icon: https://go.dev/blog/go-brand/Go-Logo/PNG/Go-Logo_Blue.png
+    keywords:
+    - go
+    - code
+    name: code-server-go
+    type: application
+    urls:
+    - helm/code-server-go-1.0.0.tgz
+    version: 1.0.0
+  code-server-python:
+  - apiVersion: v2
+    appVersion: v4.100.2
+    created: "2025-05-16T19:10:24.500129635+08:00"
+    description: A Helm chart for deploying a Python-based code server for internal
+      use.
+    digest: 2979b5ff94a1fda32d13054e6d6d63e471ce1c4dd0889bdd3c1c03a7b2258a5c
+    icon: https://s3.dualstack.us-east-2.amazonaws.com/pythondotorg-assets/media/community/logos/python-logo-only.png
+    keywords:
+    - python
+    - code
+    name: code-server-python
+    type: application
+    urls:
+    - helm/code-server-python-1.0.0.tgz
+    version: 1.0.0
+generated: "2025-05-16T19:10:24.498890202+08:00"
