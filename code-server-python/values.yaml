@@ -51,10 +51,16 @@ securityContext: {}
 
 # This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
 service:
-  # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
-  type: NodePort
-  # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
-  port: 8080
+  http:
+    # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
+    type: NodePort
+    # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
+    port: 8080
+    nodePort: 10880
+  ssh:
+    type: NodePort
+    port: 22
+    nodePort: 10822 
 
 codeServer:
   enabled: true
@@ -106,6 +112,16 @@ autoscaling:
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
+
+# This section is for setting up persistence using PersistentVolumeClaim
+persistence:
+  enabled: false
+  # StorageClass name for the PVC. If set to "-", storageClassName: "" will be set
+  # which disables dynamic provisioning. If undefined or empty, the default storage class will be used.
+  storageClass: ""
+  accessModes:
+    - ReadWriteOnce
+  size: 10Gi
 
 # Additional volumes on the output Deployment definition.
 volumes:

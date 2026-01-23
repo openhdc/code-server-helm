@@ -5,14 +5,19 @@ metadata:
   labels:
     {{- include "code-server-python.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
+  type: {{ .Values.service.http.type }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
+    - name: http
       protocol: TCP
-      name: http
-      {{- if and (eq .Values.service.type "NodePort") .Values.service.nodePort }}
-      nodePort: {{ .Values.service.nodePort }}
+      port: {{ .Values.service.http.port }}
+      {{- if and (or (eq .Values.service.http.type "NodePort") (eq .Values.service.http.type "LoadBalancer")) .Values.service.http.nodePort }}
+      nodePort: {{ .Values.service.http.nodePort }}
+      {{- end }}
+    - name: ssh
+      protocol: TCP
+      port: {{ .Values.service.ssh.port }}
+      {{- if and (or (eq .Values.service.ssh.type "NodePort") (eq .Values.service.ssh.type "LoadBalancer")) .Values.service.ssh.nodePort }}
+      nodePort: {{ .Values.service.ssh.nodePort }}
       {{- end }}
   selector:
     {{- include "code-server-python.selectorLabels" . | nindent 4 }}
