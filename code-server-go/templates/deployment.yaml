@@ -84,7 +84,7 @@ spec:
       {{- if .Values.persistence.enabled }}
         - name: project
           persistentVolumeClaim:
-            claimName: {{ include "code-server-python.fullname" . }}
+            claimName: {{ include "code-server-go.fullname" . }}
       {{- else }}
       {{- with .Values.volumes }}
         {{- toYaml . | nindent 8 }}
