@@ -2,7 +2,7 @@ apiVersion: v2
 name: code-server-python
 description: A Helm chart for deploying a Python-based code server for internal use.
 type: application
-version: 1.0.0
+version: 1.0.2
 appVersion: "v4.100.2"
 icon: https://s3.dualstack.us-east-2.amazonaws.com/pythondotorg-assets/media/community/logos/python-logo-only.png
 keywords:
