@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "code-server-go.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
+  type: {{ .Values.service.http.type }}
   ports:
     - name: http
       protocol: TCP
