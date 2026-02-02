@@ -42,11 +42,18 @@ spec:
           command: ["/bin/bash", "-c"]
           args:
             - |
+              echo "Install ssh package"
+              apt update --fix-missing && apt install -y openssh-server
+              mkdir -p /run/sshd
+              sed -i 's/^#\?PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config
+              /usr/sbin/sshd
+              echo "root:$PASSWORD" | chpasswd
+              echo "Prepare code server"
               echo "export PATH=$PATH:/usr/local/go/bin" >> /etc/profile &&
-              curl -fL https://github.com/coder/code-server/releases/download/v4.100.2/code-server-4.100.2-linux-amd64.tar.gz -o code-server.tar.gz &&
+              curl -fL https://github.com/coder/code-server/releases/download/v4.108.2/code-server-4.108.2-linux-amd64.tar.gz -o code-server.tar.gz &&
               tar -xzf code-server.tar.gz &&
-              ./code-server-4.100.2-linux-amd64/bin/code-server --install-extension golang.Go &&
-              ./code-server-4.100.2-linux-amd64/bin/code-server --auth password --bind-addr 0.0.0.0:8080 /go/src
+              ./code-server-4.108.2-linux-amd64/bin/code-server --install-extension golang.Go &&
+              ./code-server-4.108.2-linux-amd64/bin/code-server --auth password --bind-addr 0.0.0.0:8080 /go/src
           env:
             - name: PASSWORD
               value: {{ .Values.codeServer.password }}
@@ -73,9 +80,15 @@ spec:
           volumeMounts:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-      {{- with .Values.volumes }}
       volumes:
+      {{- if .Values.persistence.enabled }}
+        - name: project
+          persistentVolumeClaim:
+            claimName: {{ include "code-server-python.fullname" . }}
+      {{- else }}
+      {{- with .Values.volumes }}
         {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
